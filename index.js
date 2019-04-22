@@ -14,6 +14,11 @@ server.get('/', (req, res) => {
   res.send('Howdy from Users API // by: x-zen');
 });
 
+// handle request to the root of the api, the '/api' route
+server.get('/api', (req, res) => {
+  res.send(`Woah you arrived at this empty route at ${Date()}`);
+});
+
 /* ENDPOINTS */
 
 // POST - Creates a user with info sent in request
@@ -29,7 +34,7 @@ server.post('/api/users', (req, res) => {
   db
   .insert(newUser)
   .then(userID => {
-    res.status(201).json(userID);
+    res.status(201).json(userID && newUser);
   })
   .catch(err => {
     res.status(500).json({ error: 'There was an error while saving the user to the database' })
@@ -97,7 +102,7 @@ server.put('/api/users/:id', (req, res) => {
   .update(id, changes)
   .then(updated => {
     if (updated === 1) {
-      res.status(200).json(updated)
+      res.status(200).json(updated && changes)
     } else {
       res.status(404).json({ error: 'The user with the specified ID does not exist' })
     }
