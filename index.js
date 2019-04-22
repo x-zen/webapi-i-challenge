@@ -1,5 +1,6 @@
 // implement your API here
 const express = require('express'); // import the express package
+const cors = require('cors'); // import the cors package
 
 const db = require('./data/db.js'); // import data helpers
 
@@ -8,6 +9,7 @@ const port = 5000;  // specify the port to listen on
 const server = express(); // creates the server
 
 server.use(express.json()); // add this to make POST and PUT work
+server.use(cors()); // cross origin resource sharing
 
 // handle request to the root of the api, the '/' route
 server.get('/', (req, res) => {
